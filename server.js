@@ -10,58 +10,52 @@ app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/public'));
 
 app.use((req, res, next) => {
-    let now = new Date().toString();
-    let log =`${now}: ${req.method} ${req.url}`;
-    fs.appendFile('server.log', log + '\n', (err) => {
-      if (err) {
-        console.log('Unable to append to server.log.');
-      }
-    });
-    next();
+  let now = new Date().toString();
+  let log = `${now}: ${req.method} ${req.url}`;
+  fs.appendFile('server.log', log + '\n', (err) => {
+    if (err) {
+      console.log('Unable to append to server.log.');
+    }
+  });
+  next();
 });
 
-// app.use((req, res, next) => {
-//     res.render('maintenance.hbs', {
-//         pageTitle: 'We`ll be right back',
-//         welcomeMessage: 'See you soon!',
-//     })
-//
-// });
+
 
 hbs.registerHelper('getCurrentYear', () => {
-    return new Date().getFullYear();
+  return new Date().getFullYear();
 });
 
 hbs.registerHelper('screamIt', (text) => {
-    return text.toUpperCase();
+  return text.toUpperCase();
 });
 
 app.get('/', (req, res) => {
-    res.render('home.hbs', {
-        pageTitle: 'Home Page',
-        welcomeMessage: 'Hello!',
-    })
+  res.render('home.hbs', {
+    pageTitle: 'Home Page',
+    welcomeMessage: 'Hello!',
+  });
 });
 
 app.get('/about', (req, res) => {
-    res.render('about.hbs', {
-        pageTitle: 'About Page',
-    })
+  res.render('about.hbs', {
+    pageTitle: 'About Page',
+  })
 });
 
 app.get('/bad', (req, res) => {
-    res.send({
-        errorMessage: 'Unable to handle request!'
-    })
+  res.send({
+    errorMessage: 'Unable to handle request!'
+  })
 });
 
 app.get('/projects', (req, res) => {
-    res.render('projects.hbs', {
-        pageTitle: 'My Projects',
-        welcomeMessage: 'Welcome to my projects'
-    })
+  res.render('projects.hbs', {
+    pageTitle: 'My Projects',
+    welcomeMessage: 'Welcome to my projects'
+  })
 });
 
 app.listen(port, () => {
-    console.log(`Servers is up on port ${port}`);
+  console.log(`Servers is up on port ${port}`);
 });
